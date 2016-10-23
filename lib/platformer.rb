@@ -3,12 +3,6 @@ require 'platformer/collectible_gem'
 require 'platformer/map'
 require 'platformer/player'
 require 'platformer/game'
-WIDTH, HEIGHT = 600, 600
-
-module Tiles
-  Grass = 0
-  Earth = 1
-end
 
 module Platformer
   def self.init

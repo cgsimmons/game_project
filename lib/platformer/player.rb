@@ -1,18 +1,21 @@
 
 
 class Player
-  attr_reader :x, :y
+  attr_reader :x, :y, :score
 
   def initialize(map, x, y)
     @x, @y = x, y
     @dir = :left
     @vy = 0 # Vertical velocity
     @map = map
+    @angle = 0
     # Load all animation frames
     @standing, @walk1, @walk2, @jump = *Gosu::Image.load_tiles("media/cptn_ruby.png", 50, 50)
     # This always points to the frame that is currently drawn.
     # This is set in update, and used in draw.
     @cur_image = @standing
+    @score = 0
+    
   end
 
   def draw
@@ -24,7 +27,8 @@ class Player
       offs_x = 25
       factor = -1.0
     end
-    @cur_image.draw(@x + offs_x, @y - 49, 0, factor, 1.0)
+    # @cur_image.draw_rot(@x + offs_x, @y - 49, 0, -@angle, 0.5, 0.5, factor, 1.0)
+     @cur_image.draw(@x + offs_x, @y - 49, 0, factor, 1.0)
   end
 
   # Could the object be placed at x + offs_x/y + offs_y without being stuck?
@@ -34,7 +38,8 @@ class Player
       not @map.solid?(@x + offs_x, @y + offs_y - 45)
   end
 
-  def update(move_x)
+  def update(move_x, angle)
+    @angle = angle
     # Select image depending on action
     if (move_x == 0)
       @cur_image = @standing
@@ -76,8 +81,12 @@ class Player
 
   def collect_gems(gems)
     # Same as in the tutorial game.
+    count = gems.size
     gems.reject! do |c|
       (c.x - @x).abs < 50 and (c.y - @y).abs < 50
+    end
+    if count > gems.size
+      @score += 1
     end
   end
 end

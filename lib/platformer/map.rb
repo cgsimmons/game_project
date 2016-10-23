@@ -9,7 +9,6 @@ class Map
   def initialize(filename)
     # Load 60x60 tiles, 5px overlap in all four directions.
     @tileset = Gosu::Image.load_tiles("media/tileset.png", 60, 60, :tileable => true)
-
     gem_img = Gosu::Image.new("media/gem.png")
     @gems = []
 
