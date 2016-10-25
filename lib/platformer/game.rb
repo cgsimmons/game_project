@@ -31,7 +31,7 @@ class GameWindow < Gosu::Window
     @camera_y = [[@cptn.y - HEIGHT / 2, 0].max, @map.height * 50 - HEIGHT].min
 
     # Uncomment to start incrementing angle
-     rotater
+    rotater
   end
 
   def draw
@@ -53,9 +53,10 @@ class GameWindow < Gosu::Window
   end
 
   def rotater
-    # if @angle < 90
-      @angle += 0.5
-    # end
+    @angle += 0.5
+    if @angle == 360
+      @angle = 0
+    end
   end
 end
 
